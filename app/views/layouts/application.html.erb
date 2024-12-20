@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Bonds" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+
+  
+
+  <!-- 各ビューファイル共通の処理 -->
+  <body>
+  <header>
+  <div class="header-logo">
+    <a href="/">bonds</a>
+  </div>
+  <ul class="header-menus">
+    <li>
+      <a href="/about">bondsとは</a>
+    </li>
+    <!-- aタグでもいいがlink toメソッドを利用 -->
+    <li>
+          <!-- ここにlink_toメソッドを用いて投稿一覧ページへのリンクを作成してください -->
+          <%= link_to "投稿一覧","/posts/index" %>
+    </li>
+    <li>
+          <!-- 新規投稿ページへのリンクを追加した-->
+          <%= link_to("新規投稿", "/posts/new") %>
+        </li>
+  </ul>
+</header>
+
+<!--flashはいろいろな箇所で共通で使っていくのでapplication.html.erbで表示している。-->
+<% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+<!-- 各ビューファイルは以下のyieldに代入され、application.html.erbの一部となる -->
+    <%= yield %>
+  </body>
+  
+</html>

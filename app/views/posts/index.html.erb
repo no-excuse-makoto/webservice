@@ -1,0 +1,15 @@
+<!-- ヘッダーは共通の処理のためapplication.html.erbに移動 -->
+
+
+<!--  配列をeach文で配列から出力-->
+
+<div class="main posts-index">
+  <div class="container">
+    <% @posts.each do |post| %>
+      <div class="posts-index-item">
+        <!-- 以下をlink_toメソッドを用いて書き換えてください -->
+        <%= link_to post.content, "/posts/#{post.id}" %>
+      </div>
+    <% end %>
+  </div>
+</div>
