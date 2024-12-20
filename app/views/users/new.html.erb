@@ -1,0 +1,30 @@
+<div class="main users-new">
+  <div class="container">
+    <div class="form-heading">新規ユーザー登録</div>
+    <div class="form users-form">
+      <div class="form-body">
+        <!-- エラーメッセージを表示する -->
+      <% @user.errors.full_messages.each do |message| %>
+        <div class="form-error">
+          <%= message %>
+        </div>
+      <% end %>
+
+
+
+        <!-- フォームの送信先を指定している -->
+      <%= form_tag("/users/create") do %>
+        <p>ユーザー名</p>
+        <!-- 1行だけの入力フォームを作成して、params[:name]に入力された値を送信する -->
+        <input name="name" value="<%= @user.name %>">
+        
+        <p>メールアドレス</p>
+        <!-- 1行だけの入力フォームを作成して、params[:email]に入力された値を送信する -->
+        <input name="email" value="<%= @user.email %>">
+        
+        <input type="submit" value="新規登録">
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

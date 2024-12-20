@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "users/index" => "users#index"
   
   # 1 generate controllerで追加されたルーティング
   get "/" => "home#top"
@@ -26,15 +27,20 @@ Rails.application.routes.draw do
   # 8 削除を押したら、idのあるこのリンクに飛ばされてdestroyアクションに行く
   delete "posts/:id/destroy" => "posts#destroy"
 
+  # 9 ユーザー詳細ページ
+  get "users/:id" => "users#show"
 
+  # 10 ユーザー新規登録ページ
+  get "signup" => "users#new"
 
+  # 11 ユーザー新規登録からデータベースを操作するアクション
+  post "users/create" => "users#create"
 
+  # 12 ユーザー編集ページ
+  get "users/:id/edit" => "users#edit"
 
-
-
-
-
-
+  # 13 ユーザー編集からデータベースを操作するアクション
+  post "users/:id/update" => "users#update"
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
