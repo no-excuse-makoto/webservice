@@ -42,6 +42,19 @@ Rails.application.routes.draw do
   # 13 ユーザー編集からデータベースを操作するアクション
   post "users/:id/update" => "users#update"
 
+  # 14 ログインページへのルーティング
+  get "login" => "users#login_form"
+
+  # 15 ログインからデータベースを操作するアクション。ルーティングがpostなので、getとは違うルーティング
+  post "login" => "users#login"
+
+  # 16 ログアウトからsessionを削除するアクション
+  delete "logout" => "users#logout"
+
+
+
+
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

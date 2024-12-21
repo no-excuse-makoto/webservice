@@ -23,31 +23,53 @@
   <!-- 各ビューファイル共通の処理 -->
   <body>
   <header>
-  <div class="header-logo">
-    <a href="/">bonds</a>
-  </div>
+    <div class="header-logo">
+        <!--ログインしているときとしていないときでロゴのリンク先を変える-->
+      <% if @current_user %>
+        <%= link_to("Bonds", "/posts/index") %>
+      <% else %>
+        <%= link_to("Bonds", "/") %>
+      <% end %>
+    </div>
   <ul class="header-menus">
-    <li>
-      <a href="/about">bondsとは</a>
-    </li>
-    <!-- aタグでもいいがlink toメソッドを利用 -->
-    <li>
-          <!-- ここにlink_toメソッドを用いて投稿一覧ページへのリンクを作成してください -->
-          <%= link_to "投稿一覧","/posts/index" %>
-    </li>
-    <li>
-          <!-- 新規投稿ページへのリンクを追加した-->
-          <%= link_to("新規投稿", "/posts/new") %>
-    </li>
+      <!-- ログインしているユーザーの情報をURLパラメータから取得して変数current_userに代入している。ここで変数を定義する理由は、ここは共通のヘッダー部分であり、ログインしているユーザーの情報を表示するためには、各アクションで定義した変数を使うことが手間がかかりすぎてできないため。 -->
+    <!--before_actionを使うのでこの行はなし<% current_user = User.find_by(id: session[:user_id]) %>-->
 
-      <!-- ユーザー一覧ページへのリンク -->
-    <li>
-      <%= link_to("ユーザー一覧", "/users/index") %>
-    </li>
-    <!-- 新規ユーザー登録ページへのリンク -->
-    <li>
-      <%= link_to("新規登録", "/signup") %>
-    </li>
+    <!--ここでbefore_actionを使っているのでcurrent_userは使わずに@current_userを使う-->
+      <% if @current_user %>
+          <li>
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>さん
+          </li>
+        <!-- aタグでもいいがlink toメソッドを利用 -->
+          <li>
+            <!-- ここにlink_toメソッドを用いて投稿一覧ページへのリンクを作成してください -->
+            <%= link_to "投稿一覧","/posts/index" %>
+          </li>
+          <li>
+            <!-- 新規投稿ページへのリンクを追加した-->
+            <%= link_to("新規投稿", "/posts/new") %>
+          </li>
+            <!-- ユーザー一覧ページへのリンク -->
+          <li>
+            <%= link_to("ユーザー一覧", "/users/index") %>
+          </li>
+          <li>
+            <!-- ログアウト用のリンクを追加してください -->
+            <%= link_to "ログアウト", "/logout", method: :delete, data: { "turbo-method": :delete } %>
+          </li>
+      <% else %>
+    <!-- ログインしていない場合のリンク -->
+          <li>
+            <a href="/about">bondsとは</a>
+          </li>
+            <!-- 新規ユーザー登録ページへのリンク -->
+          <li>
+            <%= link_to("新規登録", "/signup") %>
+          </li>
+          <li>
+            <%= link_to("ログイン", "/login") %>
+          </li>
+      <% end %>
   </ul>
 </header>
 

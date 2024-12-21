@@ -21,7 +21,9 @@
         <p>メールアドレス</p>
         <!-- 1行だけの入力フォームを作成して、params[:email]に入力された値を送信する -->
         <input name="email" value="<%= @user.email %>">
-        
+        <p>パスワード</p>
+        <!-- パスワードを入力するためのフォームを作成して、params[:password]に入力された値を送信する -->
+          <input type="password" name="password" value="<%= @user.password %>">
         <input type="submit" value="新規登録">
         <% end %>
       </div>

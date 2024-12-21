@@ -4,6 +4,11 @@
     <!-- each文を追加することでユーザーのデータをすべて表示している-->
     <% @users.each do |user| %>
       <div class="users-index-item">
+        <!-- 以下で、ユーザーの画像を出力していて、その画像のURLを指定している -->
+        <div class="user-left">
+          <!-- <img>タグを用いて、プロフィール画像を表示してください -->
+          <img src="<%= "/user_images/#{user.image_name}" %>">
+        </div>
         <div class="user-right">
           <!-- ユーザー名を表示しているのと同時に、そのユーザーの詳細ページへのリンクを設定している -->
           <%= link_to(user.name, "/users/#{user.id}") %>

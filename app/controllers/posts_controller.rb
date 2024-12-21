@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
-  def index
+  #application_controller.rbで定義したメソッドを使うためにbefore_actionを使っている
+  before_action :authenticate_user
 
+  def index
     # ビューに書くこともできるが定石に倣いアクション内に投稿の変数を定義,直接記入からモデルからのデータの取得に変更
     @posts = Post.all.order(created_at: :desc)
   end
