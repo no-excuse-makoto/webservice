@@ -51,6 +51,19 @@ Rails.application.routes.draw do
   # 16 ログアウトからsessionを削除するアクション
   delete "logout" => "users#logout"
 
+  # 19 共感一覧ページ
+  get "users/:id/likes" => "users#likes"
+
+
+
+
+  # 17 共感機能のルーティング
+  post "likes/:post_id/create" => "likes#create"
+
+
+  # 18 共感を外す機能のルーティング
+  delete "likes/:post_id/destroy" => "likes#destroy"
+
 
 
 

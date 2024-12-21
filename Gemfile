@@ -68,3 +68,6 @@ group :development, :test do
 end
 
 gem 'sassc-rails'
+
+# パスワードの暗号化
+gem 'bcrypt'

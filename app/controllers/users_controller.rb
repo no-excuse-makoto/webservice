@@ -73,9 +73,9 @@ class UsersController < ApplicationController
   # ログインを行うアクション
   def login
      # 入力内容と一致するユーザーを取得し、変数@userに代入
-     @user = User.find_by(email: params[:email], password: params[:password])
-     # @userが存在するかどうかを判定するif文
-     if @user
+     @user = User.find_by(email: params[:email])
+     # if文で@userが存在し、authenticateメソッドでハッシュ化されたパスワードが一致するかどうかを確認
+     if @user && @user.authenticate(params[:password])
       # ログインに成功した場合、セッションにユーザーIDを保存し、投稿一覧ページにリダイレクトする
        session[:user_id] = @user.id
        flash[:notice] = "ログインしました"
@@ -98,6 +98,14 @@ class UsersController < ApplicationController
     flash[:notice] = "ログアウトしました"
     redirect_to("/login")
   end
+
+  def likes
+    # ユーザー情報を取得
+    @user = User.find_by(id: params[:id])
+    # ユーザーが共感した投稿を取得
+    @likes = Like.where(user_id: @user.id)
+  end
+
 
   #「ログイン中のユーザー」と「編集しようとしているユーザー」が正しいかどうかを確かめるためのメソッドを定義。to_iメソッドを使って、文字列を整数に変換している
   def ensure_correct_user

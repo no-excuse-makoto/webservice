@@ -16,6 +16,20 @@
         <%= @post.created_at %>
       </div>
 
+      <% if Like.find_by(user_id: @current_user.id, post_id: @post.id) %>
+      <!--共感！済みの場合の処理-->
+        <%= link_to("/likes/#{@post.id}/destroy", method: :delete, data: { "turbo-method": :delete }) do %>
+          <span class="fa fa-heart liked-btn"></span> 共感済み
+        <% end %>
+      <% else %>
+        <%= link_to("/likes/#{@post.id}/create", method: :post, data: { "turbo-method": :post }) do %>
+          <span class="fa fa-heart unliked-btn"></span> 共感！
+        <% end %>
+      <% end %>
+      <!-- 共感の数を表示する -->
+      <%= @likes_count %> 
+
+
       <!-- 編集ページへのリンクでログインしているユーザーと投稿者が同じ場合のみ表示する -->
       <% if @post.user_id == @current_user.id %>
         <div class="post-menus">

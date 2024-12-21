@@ -15,6 +15,8 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     # インスタンスメソッドを使って、投稿に紐づいているユーザー情報を取得している。そのインスタンスメソッドはpost.rbに定義されている
     @user = @post.user
+    # 共感数を取得するためのインスタンス変数を定義している
+    @likes_count = Like.where(post_id: @post.id).count
   end
 
   # 新規の投稿をするためのアクション
