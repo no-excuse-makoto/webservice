@@ -7,4 +7,9 @@ class User < ApplicationRecord
   
   # passwordカラムに関するバリデーションを行い値があるかどうかを確認している
   validates :password, {presence: true}
+
+  # ユーザーが投稿した投稿をすべて取得するためのインスタンスメソッドです。このメソッドは、Userモデルに定義されている
+  def posts
+    return Post.where(user_id: self.id)
+  end
 end

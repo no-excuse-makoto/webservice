@@ -2,6 +2,9 @@ class PostsController < ApplicationController
   #application_controller.rbで定義したメソッドを使うためにbefore_actionを使っている
   before_action :authenticate_user
 
+  #ログイン中のユーザーのidは@current_userに代入されているので、ログイン中のユーザーのidをuser_idカラムに保存している
+  before_action :ensure_correct_user, {only: [:edit, :update, :destroy]}
+
   def index
     # ビューに書くこともできるが定石に倣いアクション内に投稿の変数を定義,直接記入からモデルからのデータの取得に変更
     @posts = Post.all.order(created_at: :desc)
@@ -10,6 +13,8 @@ class PostsController < ApplicationController
   # 投稿詳細のビューに渡すためのアクションでここはpostコントローラーだからpost/:idを取得できる。だからidカラムの値がparams[:id]と等しい投稿をデータベースから取得して代入
   def show
     @post = Post.find_by(id: params[:id])
+    # インスタンスメソッドを使って、投稿に紐づいているユーザー情報を取得している。そのインスタンスメソッドはpost.rbに定義されている
+    @user = @post.user
   end
 
   # 新規の投稿をするためのアクション
@@ -21,7 +26,10 @@ class PostsController < ApplicationController
 
   def create
     # 今回は逆にHTMLから指定のURLに移動してフォームから送信されたデータを受け取り、保存する処理を行っている
-        @post = Post.new(content: params[:content])
+    #ログイン中のユーザーのidは@current_userに代入されているので、ログイン中のユーザーのidをuser_idカラムに保存している
+        @post = Post.new(content: params[:content],user_id: @current_user.id)
+
+      #saveメソッドは保存出来たらtrue、出来なかったらfalseを返す。保存出来たら投稿一覧ページにリダイレクト、出来なかったら新規投稿ページにリダイレクト
     if @post.save
     # flash[:notice]はリダイレクト先で表示されるメッセージを設定するための変数でコントローラーからビューにデータを渡すためのメソッド
     flash[:notice] = "投稿を作成しました"  
@@ -63,4 +71,15 @@ class PostsController < ApplicationController
     flash[:notice] = "投稿を削除しました"
     redirect_to("/posts/index")
   end
+
+  # ログインしているユーザーが投稿を編集しようとした場合に、その投稿がログインしているユーザーのものかどうかをチェックするためのメソッド
+  def ensure_correct_user
+    @post = Post.find_by(id: params[:id])
+    if @post.user_id != @current_user.id
+      flash[:notice] = "権限がありません"
+      redirect_to("/posts/index")
+    end
+  end
+
+
 end

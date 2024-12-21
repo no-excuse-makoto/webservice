@@ -1,6 +1,13 @@
 <div class="main posts-show">
   <div class="container">
     <div class="posts-show-item">
+      <div class="post-user-name">
+        <!-- ユーザーの画像を表示する -->
+        <img src="<%= "/user_images/#{@user.image_name}" %>">
+
+        <!-- link_toメソッドを用いて、ユーザー詳細ページへのリンクを設定している -->
+        <%= link_to(@user.name, "/users/#{@user.id}") %>
+      </div>
       <p>
         <%= @post.content %>
       </p>
@@ -9,13 +16,13 @@
         <%= @post.created_at %>
       </div>
 
-      <!-- 編集ページへのリンク-->
-      <div class="post-menus">
-        <%= link_to("編集", "/posts/#{@post.id}/edit") %>
-        <!-- URLのルーティングからdestroyアクションへのリンクを書いているがデフォルトではGETを探す仕様なのでmethodを追加して書いている -->
-        <%= link_to "削除", "/posts/#{@post.id}/destroy", method: :delete, data: { "turbo-method": :delete } %>
-
-      </div>
+      <!-- 編集ページへのリンクでログインしているユーザーと投稿者が同じ場合のみ表示する -->
+      <% if @post.user_id == @current_user.id %>
+        <div class="post-menus">
+          <%= link_to("編集", "/posts/#{@post.id}/edit") %>
+          <%= link_to("削除", "/posts/#{@post.id}/destroy", {method: "post"}) %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
