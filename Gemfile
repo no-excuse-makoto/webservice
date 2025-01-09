@@ -65,6 +65,8 @@ gem 'vuejs-rails'
 # テストツール (RSpec)
 group :development, :test do
   gem 'rspec-rails'
+  # FactoryBotテキストより入力
+  gem 'factory_bot_rails'
 end
 
 gem 'sassc-rails'
