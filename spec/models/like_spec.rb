@@ -13,6 +13,7 @@ RSpec.describe Like, type: :model do
     expect(like).to be_valid
   end
 
+
   # user_idがない場合にいいねが無効であることを確認するテスト
   it "is not valid without a user_id" do
     # user_idがnilのいいねを作成
