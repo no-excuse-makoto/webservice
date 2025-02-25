@@ -1,0 +1,29 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches:
+      - main  # デプロイ対象のブランチ
+
+jobs:
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 060795905234.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t project-a .
+          docker tag project-a:latest 060795905234.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/project-a:latest
+          docker push 060795905234.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/project-a:latest
+
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service --cluster ProjectA-ecs-cluster --service ProjectA-ecs-service --force-new-deployment
