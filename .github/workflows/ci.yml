@@ -19,6 +19,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Grant execution permission to Brakeman
+        run: |
+          chmod +x bin/brakeman
+          ls -l bin/brakeman
+
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
 
@@ -56,12 +61,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
@@ -74,6 +73,9 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Grant execution permission to Rails
+        run: chmod +x bin/rails
 
       - name: Run tests
         env:
