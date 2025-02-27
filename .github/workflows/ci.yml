@@ -20,9 +20,7 @@ jobs:
           bundler-cache: true
 
       - name: Grant execution permission to Brakeman
-        run: |
-          chmod +x bin/brakeman
-          ls -l bin/brakeman
+        run: chmod +x bin/brakeman
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
