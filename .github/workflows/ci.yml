@@ -40,15 +40,12 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
+      
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3
 
       - name: Ensure bin scripts are executable
         run: chmod +x bin/*
-
-      - name: Debug bin permissions
-        run: ls -l bin/
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bundle exec importmap audit
