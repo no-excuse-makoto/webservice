@@ -33,8 +33,7 @@ module Bonds
         controller_specs: false
 
       # FactoryBotのファクトリを自動生成する設定
-      g.factory_bot dir: 'spec/factories'
+      g.factory_bot dir: "spec/factories"
     end
   end
 end
-

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "users/index" => "users#index"
-  
+
   # 1 generate controllerで追加されたルーティング
   get "/" => "home#top"
   # aboutのURLを省略
@@ -79,9 +79,9 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+    # Defines the root path route ("/")
+    # root "posts#index"
 
-  # Define the health check endpoint
-    get '/health', to: proc { [200, {}, ['OK']] }
+    # Define the health check endpoint
+    get "/health", to: proc { [ 200, {}, [ "OK" ] ] }
 end

@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
     # before_actionでログインしているかどうかを確認するメソッドを呼び出してください
     before_action :authenticate_user
-    
+
     # createアクションを追加してください
     def create
     # 変数@likeを定義することで、Likeモデルの新しいインスタンスを作成してください
@@ -17,6 +17,4 @@ class LikesController < ApplicationController
         @like.destroy
         redirect_to("/posts/#{params[:post_id]}")
     end
-    
-  end
-  
+end

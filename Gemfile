@@ -8,7 +8,7 @@ gem "sprockets-rails"
 # gem "sqlite3", ">= 1.4"
 
 # Use PostgreSQL as the database for Active Record　ECSのため変更
-gem 'pg'
+gem "pg"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -61,19 +61,19 @@ group :test do
 end
 
 # 認証機能 (Devise)
-gem 'devise'
+gem "devise"
 
 # Vue.jsをRailsで使用するためのgem
-gem 'vuejs-rails'
+gem "vuejs-rails"
 
 # テストツール (RSpec)
 group :development, :test do
-  gem 'rspec-rails'
+  gem "rspec-rails"
   # FactoryBotテキストより入力
-  gem 'factory_bot_rails'
+  gem "factory_bot_rails"
 end
 
-gem 'sassc-rails'
+gem "sassc-rails"
 
 # パスワードの暗号化
-gem 'bcrypt'
+gem "bcrypt"

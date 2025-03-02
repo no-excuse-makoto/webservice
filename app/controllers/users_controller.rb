@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   # application_controller.rbで定義したメソッドを使うためにbefore_actionを使っているが、index,show,edit,updateアクションのみログインしていないと見れないようにする
-  before_action :authenticate_user, {only: [:index, :show, :edit, :update]}
-  #application_controller.rbで定義した。ここではすでにログインしている場合にログインページにアクセスした場合に投稿一覧ページにリダイレクトするためのメソッドを使っている
-  before_action :forbid_login_user, {only: [:new, :create, :login_form, :login]}
-  #ログイン中のユーザーのidは@current_user.idに、編集したいユーザーのidはparams[:id]にそれぞれ代入されている。
-  before_action :ensure_correct_user, {only: [:edit, :update]}
+  before_action :authenticate_user, { only: [ :index, :show, :edit, :update ] }
+  # application_controller.rbで定義した。ここではすでにログインしている場合にログインページにアクセスした場合に投稿一覧ページにリダイレクトするためのメソッドを使っている
+  before_action :forbid_login_user, { only: [ :new, :create, :login_form, :login ] }
+  # ログイン中のユーザーのidは@current_user.idに、編集したいユーザーのidはparams[:id]にそれぞれ代入されている。
+  before_action :ensure_correct_user, { only: [ :edit, :update ] }
 
 
 
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
      @user = User.find_by(email: params[:email])
      # if文で@userが存在し、authenticateメソッドでハッシュ化されたパスワードが一致するかどうかを確認
      if @user && @user.authenticate(params[:password])
-      # ログインに成功した場合、セッションにユーザーIDを保存し、投稿一覧ページにリダイレクトする
+       # ログインに成功した場合、セッションにユーザーIDを保存し、投稿一覧ページにリダイレクトする
        session[:user_id] = @user.id
        flash[:notice] = "ログインしました"
        redirect_to("/posts/index")
@@ -107,17 +107,11 @@ class UsersController < ApplicationController
   end
 
 
-  #「ログイン中のユーザー」と「編集しようとしているユーザー」が正しいかどうかを確かめるためのメソッドを定義。to_iメソッドを使って、文字列を整数に変換している
+  # 「ログイン中のユーザー」と「編集しようとしているユーザー」が正しいかどうかを確かめるためのメソッドを定義。to_iメソッドを使って、文字列を整数に変換している
   def ensure_correct_user
     if @current_user.id != params[:id].to_i
       flash[:notice] = "権限がありません"
       redirect_to("/posts/index")
     end
   end
-
-
-
-
-
-
 end
