@@ -43,9 +43,10 @@ jobs:
 
       - name: Update ECS task definition
         run: |
-          aws ecs describe-task-definition --task-definition ECS-task --query taskDefinition > original-task-definition.json
-          cat original-task-definition.json | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities)' | jq '.containerDefinitions[0].image="060795905234.dkr.ecr.ap-northeast-1.amazonaws.com/project-a:'$IMAGE_TAG'"' > $ECS_TASK_DEFINITION
+          aws ecs describe-task-definition --task-definition ECS-task --query taskDefinition > task-def.json
+          cat task-def.json | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' > $ECS_TASK_DEFINITION
           echo "Updated task definition saved to $ECS_TASK_DEFINITION"
+        
 
       - name: Register new ECS task definition
         run: |
