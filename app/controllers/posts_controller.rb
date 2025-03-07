@@ -23,13 +23,14 @@ class PostsController < ApplicationController
   def new
      # newメソッドを用いて、Postクラスのインスタンスを作成している。つまり、postモデルの丸ごとの新しいインスタンスを作成している
      @post = Post.new
+     @categories = Category.all
   end
 
 
   def create
         # 今回は逆にHTMLから指定のURLに移動してフォームから送信されたデータを受け取り、保存する処理を行っている
         # ログイン中のユーザーのidは@current_userに代入されているので、ログイン中のユーザーのidをuser_idカラムに保存している
-        @post = Post.new(content: params[:content], user_id: @current_user.id)
+        @post = Post.new(content: params[:content], user_id: @current_user.id, category_id: params[:category_id])
 
     # saveメソッドは保存出来たらtrue、出来なかったらfalseを返す。保存出来たら投稿一覧ページにリダイレクト、出来なかったら新規投稿ページにリダイレクト
     if @post.save
@@ -83,3 +84,5 @@ class PostsController < ApplicationController
     end
   end
 end
+
+

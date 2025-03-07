@@ -13,6 +13,16 @@
           </div>
         <% end %>
 
+
+        <!-- カテゴリーを選択するためのセレクトボックスを作成 -->
+        <select name="category_id">
+          <option value="">カテゴリーを選択してください</option>
+          <!-- カテゴリーの一覧を取得し、each文で回してoptionタグを作成している -->
+          <% @categories.each do |category| %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+          <% end %>
+        </select>
+        
         <!-- 下２行で投稿フォームを作成 -->
           <textarea name = "content"><%= @post.content %></textarea>
           <input type="submit" value="投稿">
