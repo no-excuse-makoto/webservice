@@ -22,9 +22,11 @@
             <option value="<%= category.id %>"><%= category.name %></option>
           <% end %>
         </select>
-        
+
         <!-- 下２行で投稿フォームを作成 -->
           <textarea name = "content"><%= @post.content %></textarea>
+          <!-- 匿名投稿のチェックボックスを作成 -->
+          <input type="checkbox" name="is_anonymous" value="1">匿名投稿
           <input type="submit" value="投稿">
         </div>
       </div>

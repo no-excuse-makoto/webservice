@@ -14,9 +14,16 @@ class PostsController < ApplicationController
   def show
     @post = Post.find_by(id: params[:id])
     # インスタンスメソッドを使って、投稿に紐づいているユーザー情報を取得している。そのインスタンスメソッドはpost.rbに定義されている
-    @user = @post.user
+    # @user = @post.user　匿名投稿のために変更
+    # 匿名投稿を許可するために、投稿に紐づいているユーザー情報を取得する処理を変更している
+    @user = User.find_by(id: @post.user_id)
+
+
     # 共感数を取得するためのインスタンス変数を定義している
     @likes_count = Like.where(post_id: @post.id).count
+
+    # 自作、インスタンスメソッドを使って、投稿に紐づいているカテゴリー情報を取得している。そのインスタンスメソッドはpost.rbに定義されている
+    @category = @post.category
   end
 
   # 新規の投稿をするためのアクション
@@ -30,7 +37,11 @@ class PostsController < ApplicationController
   def create
         # 今回は逆にHTMLから指定のURLに移動してフォームから送信されたデータを受け取り、保存する処理を行っている
         # ログイン中のユーザーのidは@current_userに代入されているので、ログイン中のユーザーのidをuser_idカラムに保存している
-        @post = Post.new(content: params[:content], user_id: @current_user.id, category_id: params[:category_id])
+        @post = Post.new(content: params[:content], user_id: @current_user.id, category_id: params[:category_id], anonymous: params[:is_anonymous])
+
+    # if @post.anonymous管理者は知る必要がありいらない
+    #   @post.user_id = nil  # 匿名の場合、ユーザー情報を紐付けない
+    # end
 
     # saveメソッドは保存出来たらtrue、出来なかったらfalseを返す。保存出来たら投稿一覧ページにリダイレクト、出来なかったら新規投稿ページにリダイレクト
     if @post.save
@@ -46,6 +57,7 @@ class PostsController < ApplicationController
   # 編集ボタンを押すとshow.html.erbの埋め込みの変数にidが入る。そこにあるリンクに対応しているpostのeditアクションがここだとルーティングで決めている
   def edit
     @post = Post.find_by(id: params[:id])
+    @categories = Category.all # カテゴリーの情報を取得
   end
 
   # 更新したら一覧に戻る
@@ -54,6 +66,8 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     # もう一つのparamsパターンname属性に入力された編集後の内容が入る
     @post.content = params[:content]
+    # カテゴリーの情報を更新
+    @post.category_id = params[:category_id]
     # saveメソッドは保存出来たらtrue、出来なかったらfalseを返す。保存出来たら投稿一覧ページにリダイレクト、出来なかったら編集ページにリダイレクト
     if @post.save
       # flash[:notice]はリダイレクト先で表示されるメッセージを設定するための変数でコントローラーからビューにデータを渡すためのメソッド

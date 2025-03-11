@@ -3,11 +3,22 @@
     <div class="posts-show-item">
       <div class="post-user-name">
         <!-- ユーザーの画像を表示する -->
-        <img src="<%= "/user_images/#{@user.image_name}" %>">
+        <% if @post.anonymous %> 
+          <img src="/user_images/default_anonymous.png" alt="匿名アイコン">
+          <p>匿名ユーザー</p> 
+        <% else %>
 
-        <!-- link_toメソッドを用いて、ユーザー詳細ページへのリンクを設定している -->
-        <%= link_to(@user.name, "/users/#{@user.id}") %>
+          <img src="<%= "/user_images/#{@user.image_name}" %>">
+          <!-- link_toメソッドを用いて、ユーザー詳細ページへのリンクを設定している -->
+          <%= link_to(@user.name, "/users/#{@user.id}") %>
+        <% end %>
       </div>
+
+      <!-- 投稿のカテゴリーを表示する -->
+      <div class="post-category">
+        <%= @category.name %>
+      </div>
+
       <p>
         <%= @post.content %>
       </p>
