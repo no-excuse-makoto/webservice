@@ -109,6 +109,11 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
 
+    # キーワード検索 (投稿内容に含まれる単語を部分一致で検索)
+    if params[:keyword].present?
+      @posts = @posts.where('content LIKE ?', "%#{params[:keyword]}%")
+    end
+
     render :index  # 検索結果は一覧ページに表示
   end
 

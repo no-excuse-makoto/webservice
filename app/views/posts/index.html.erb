@@ -15,12 +15,18 @@
         <%= form.label :category, "カテゴリー検索" %>
         <%= form.select :category, Category.pluck(:name, :id), include_blank: "すべて" %>
       </div>
+
+      <div>
+      <%= form.label :keyword, "キーワード検索" %>
+      <%= form.text_field :keyword, placeholder: "例) 相談、悩み、友達" %>
+      </div>
+
       <div>
         <%= form.submit "検索" %>
       </div>
     <% end %>
   </div>
-  
+
   <div class="container">
     <% @posts.each do |post| %>
       <div class="posts-index-item">
