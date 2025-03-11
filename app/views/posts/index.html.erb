@@ -1,9 +1,26 @@
 <!-- ヘッダーは共通の処理のためapplication.html.erbに移動 -->
 
 
+
+
+
 <!--  配列をeach文で配列から出力-->
 
 <div class="main posts-index">
+
+  <!-- 検索フォームの追加 -->
+  <div class="search-form">
+    <%= form_with url: '/posts/search', method: :get, local: true do |form| %>
+      <div>
+        <%= form.label :category, "カテゴリー検索" %>
+        <%= form.select :category, Category.pluck(:name, :id), include_blank: "すべて" %>
+      </div>
+      <div>
+        <%= form.submit "検索" %>
+      </div>
+    <% end %>
+  </div>
+  
   <div class="container">
     <% @posts.each do |post| %>
       <div class="posts-index-item">

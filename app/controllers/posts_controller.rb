@@ -97,6 +97,22 @@ class PostsController < ApplicationController
       redirect_to("/posts/index")
     end
   end
+
+
+
+  # 検索用のアクション
+  def search
+    # パラメータからカテゴリー情報を取得して検索
+    if params[:category].present?
+      @posts = Post.where(category: params[:category])
+    else
+      @posts = Post.all
+    end
+
+    render :index  # 検索結果は一覧ページに表示
+  end
+
+
 end
 
 
