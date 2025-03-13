@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # 20 カテゴリー検索
   get 'posts/search', to: 'posts#search'
-  
+
   # 3　投稿の詳細IDに対応している
   get "posts/:id" => "posts#show"
 
@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   # 16 ログアウトからsessionを削除するアクション
   delete "logout" => "users#logout"
 
-  # 19 共感一覧ページ
+  # 19 共感した投稿一覧ページ
   get "users/:id/likes" => "users#likes"
 
 
@@ -66,6 +66,9 @@ Rails.application.routes.draw do
 
   # 18 共感を外す機能のルーティング
   delete "likes/:post_id/destroy" => "likes#destroy"
+
+  # 21 共感してくれたユーザー一覧ページ
+  get "posts/:id/likeusers" => "posts#likeusers"
 
   
 

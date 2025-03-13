@@ -31,6 +31,8 @@ class PostsController < ApplicationController
      # newメソッドを用いて、Postクラスのインスタンスを作成している。つまり、postモデルの丸ごとの新しいインスタンスを作成している
      @post = Post.new
      @categories = Category.all
+
+    render :new
   end
 
 
@@ -115,6 +117,15 @@ class PostsController < ApplicationController
     end
 
     render :index  # 検索結果は一覧ページに表示
+  end
+
+
+  # いいねしたユーザー一覧を表示するアクション
+  def likeusers
+    @post = Post.find_by(id: params[:id])
+    @users = User.where(id: Like.where(post_id: @post.id).pluck(:user_id))
+
+    render :likeusers
   end
 
 
