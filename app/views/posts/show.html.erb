@@ -22,6 +22,11 @@
       <p>
         <%= @post.content %>
       </p>
+      <!-- タグを表示する -->
+      <div class="post-tags">
+        <% @tags.each do |tag| %>
+          <%= tag.name %>
+      <% end %>
 
       <div class="post-time">      
         <%= @post.created_at %>

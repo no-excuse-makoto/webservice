@@ -1,6 +1,11 @@
-共感してくれたユーザー一覧ページ
-<% @users.each do |user| %>
-  <div class="user">
-    <p><%= user.name %></p>
+<div class="main posts-new">
+  <div class="container">
+    <!-- 共感してくれたユーザー一覧ページ -->
+    <h2>共感してくれたユーザー一覧</h2>
+    <% @users.each do |user| %>
+      <div class="user">
+        <p><%= user.name %></p>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

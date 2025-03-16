@@ -24,6 +24,9 @@ class PostsController < ApplicationController
 
     # 自作、インスタンスメソッドを使って、投稿に紐づいているカテゴリー情報を取得している。そのインスタンスメソッドはpost.rbに定義されている
     @category = @post.category
+
+    #タグの情報を取得するためのインスタンス変数を定義している
+    @tags = @post.tags
   end
 
   # 新規の投稿をするためのアクション
@@ -54,6 +57,21 @@ class PostsController < ApplicationController
     else
       render("posts/new", status: :unprocessable_entity)
     end
+    
+    # 新規投稿のタグを保存する処理を追加する ビューで決めたtag_nameを取得して文字列をスペース区切りで配列に変換している
+    tag_name = params[:tag_name].gsub("　", " ")
+    tag_list = tag_name.split(nil)
+    # 配列の要素を一つずつ取り出して、それぞれの要素に対して処理を行う
+    tag_list.each do |tag_name|
+      # タグの中身を保存する処理を追加する
+      @tag = Tag.new(name: tag_name)
+      @tag.save
+    end
+      
+    # タグとpostの中間テーブルに保存する処理を追加する
+    @post_tag = PostTag.new(post_id: @post.id, tag_id: @tag.id)
+    @post_tag.save
+
   end
 
   # 編集ボタンを押すとshow.html.erbの埋め込みの変数にidが入る。そこにあるリンクに対応しているpostのeditアクションがここだとルーティングで決めている

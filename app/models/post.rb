@@ -12,6 +12,9 @@ class Post < ApplicationRecord
 
     # category_idカラムに対して、presence: trueを指定しているので、category_idカラムには必ず値が入るようになっている。つまり、空の投稿を保存することはできない
     validates :category_id, presence: true
+
+    has_many :post_tags, dependent: :destroy
+    has_many :tags, through: :post_tags
     
 
 
