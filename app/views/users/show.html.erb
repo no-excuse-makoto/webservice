@@ -7,29 +7,36 @@
       <h2><%= @user.name %></h2>
       <!-- 以下で、メールアドレスを出力している -->
       <p><%= @user.email %></p>
-      <!--編集しようとしているユーザーのidとログインしているユーザーのidが等しい場合のみ編集リンクを表示する-->
-      <% if @user.id == @current_user.id %>
-        <!-- 以下で、ユーザー情報の編集ページへのリンクを設定している -->
-      <%= link_to("編集", "/users/#{@user.id}/edit") %>
+
+      <!-- フォロー/フォロー解除ボタン -->
+      <% if current_user.following?(@user) %>
+        <%= button_to "フォロー解除", unfollow_user_path(@user), method: :delete %>
+      <% else %>
+        <%= button_to "フォローする", follow_user_path(@user), method: :post %>
+      <% end %>
+
+      <!-- 編集リンク（ログイン中のユーザーが自分の場合のみ表示） -->
+      <% if @user.id == current_user.id %>
+        <%= link_to("編集", "/users/#{@user.id}/edit", class: "btn btn-secondary") %>
       <% end %>
     </div>
 
+    <!-- フォロー/フォロワー一覧へのリンク -->
     <ul class="user-tabs">
+      <li><%= link_to("フォロー", user_following_path(@user)) %></li>
+      <li><%= link_to("フォロワー", user_followers_path(@user)) %></li>
       <li class="active"><%= link_to("投稿", "/users/#{@user.id}") %></li>
       <li><%= link_to("いいね!", "/users/#{@user.id}/likes") %></li>
     </ul>
 
-
-
-
-
-      <!--以下で、userモデルに定義したpostsメソッドを用いて、そのユーザーが投稿した投稿を全て取得している-->
+    <!-- 以下で、userモデルに定義したpostsメソッドを用いて、そのユーザーが投稿した投稿を全て取得している -->
     <% @user.posts.each do |post| %>
       <div class="posts-index-item">
         <div class="post-left">
           <!-- 以下で、ユーザーの画像を出力していて、その画像のURLを指定している -->
           <img src="<%= "/user_images/#{post.user.image_name}" %>">
         </div>
+        
         <div class="post-right">
           <div class="post-user-name">
             <!-- 以下で、ユーザー詳細ページへのリンクを設定している -->

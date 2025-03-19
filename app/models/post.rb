@@ -15,11 +15,15 @@ class Post < ApplicationRecord
 
     has_many :post_tags, dependent: :destroy
     has_many :tags, through: :post_tags
+
+    has_many :comments, dependent: :destroy
+    has_many :posts
+    has_many :likes
     
 
 
     # インスタンスメソッドを定義している。このメソッドは、投稿に紐づいているユーザー情報を取得するためのもの
-    def user
-        User.find_by(id: self.user_id)
-    end
+    # def user
+    #     User.find_by(id: self.user_id)
+    # end
 end

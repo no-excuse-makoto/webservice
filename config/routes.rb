@@ -70,7 +70,24 @@ Rails.application.routes.draw do
   # 21 共感してくれたユーザー一覧ページ
   get "posts/:id/likeusers" => "posts#likeusers"
 
-  
+  # フォロー機能のルート
+   get "/users/:id", to: "users#show", as: "user"
+  post "/users/:id/follow", to: "users#follow", as: "follow_user"
+  delete "/users/:id/unfollow", to: "users#unfollow", as: "unfollow_user"
+
+  # フォロー/フォロワー一覧
+  get "/users/:id/following", to: "users#following", as: "user_following"
+  get "/users/:id/followers", to: "users#followers", as: "user_followers"
+
+  # タグの検索
+  get "/tags/:tag_name", to: "posts#tagsearch", as: :tag
+
+  # コメント機能のルーティング
+  # コメントを作成するルート
+  post "posts/:post_id/comments/create" => "comments#create", as: "create_comment"
+
+  # コメントを削除するルート
+  delete "posts/:post_id/comments/:id/destroy" => "comments#destroy", as: "destroy_comment"
 
 
 

@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by(id: session[:user_id])
   end
 
+  # ビューでも@current_userを利用可能にする
+  helper_method :current_user
+
+  # current_userメソッドを定義
+  def current_user
+    @current_user
+  end
+
   # 同じクラスなので、@authenticat_userを使うことができる。このメソッドはログインしていない場合にログインページにリダイレクトするためのメソッドです。
   def authenticate_user
     if @current_user == nil

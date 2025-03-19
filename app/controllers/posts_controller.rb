@@ -27,6 +27,9 @@ class PostsController < ApplicationController
 
     #タグの情報を取得するためのインスタンス変数を定義している
     @tags = @post.tags
+
+    # コメントの情報を取得するためのインスタンス変数を定義している
+    @comments = @post.comments.includes(:user) # コメントを取得
   end
 
   # 新規の投稿をするためのアクション
@@ -60,18 +63,30 @@ class PostsController < ApplicationController
     
     # 新規投稿のタグを保存する処理を追加する ビューで決めたtag_nameを取得して文字列をスペース区切りで配列に変換している
     tag_name = params[:tag_name].gsub("　", " ")
+    # 配列に変換したtag_nameをスペース区切りで分割している。しかし、このままだと配列の要素が一つしかないので、split(nil)を使って、スペース区切りで分割している
     tag_list = tag_name.split(nil)
-    # 配列の要素を一つずつ取り出して、それぞれの要素に対して処理を行う
+    # 配列の要素を一つずつ取り出して、それぞれの要素に対して処理を行う。配列がゼロの場合は処理を行わず、endで処理を終了する
     tag_list.each do |tag_name|
-      # タグの中身を保存する処理を追加する
-      @tag = Tag.new(name: tag_name)
-      @tag.save
-    end
+      # タグの中身が同じ場合、そのタグがすでに存在しているかどうかをチェックする処理をif文で追加する
+      @tag = Tag.find_by(name: tag_name)
+      # @tagがnilの場合、そのタグがまだ存在していないので、新しくタグを作成する処理を追加する
+      if @tag.nil?
+        # タグの中身を保存する処理を追加する
+        @tag = Tag.new(name: tag_name)
+        @tag.save
+      end
+        # タグとpostの中間テーブルに保存する処理を追加する
+        # @post_tag = PostTag.new(post_id: @post.id, tag_id: @tag.id)
+        # @post_tag.save
+        # else
+        # すでに存在しているタグの場合、そのタグとpostの中間テーブルに保存する処理を追加する
+        # @post_tag = PostTag.new(post_id: @post.id, tag_id: @tag.id)
+        # @post_tag.save
       
-    # タグとpostの中間テーブルに保存する処理を追加する
-    @post_tag = PostTag.new(post_id: @post.id, tag_id: @tag.id)
-    @post_tag.save
-
+      # すでに存在しているタグの場合、そのタグとpostの中間テーブルに保存する処理を追加する
+      @post_tag = PostTag.new(post_id: @post.id, tag_id: @tag.id)
+      @post_tag.save
+    end
   end
 
   # 編集ボタンを押すとshow.html.erbの埋め込みの変数にidが入る。そこにあるリンクに対応しているpostのeditアクションがここだとルーティングで決めている
@@ -145,6 +160,26 @@ class PostsController < ApplicationController
 
     render :likeusers
   end
+
+  # タグ検索用のアクション
+  def tagsearch
+    @tag = Tag.find_by(name: params[:tag_name])
+    # タグがない場合は、フラッシュで外套のデータがありませんと表示して、投稿一覧ページにリダイレクトする
+    if @tag.nil?
+      flash[:notice] = "そのデータは存在しません"
+      redirect_to("/posts/index")
+    else
+      # タグの名前を取得して、そのタグに紐づいている投稿を取得している
+      @posts = @tag.posts
+      if @posts.empty?
+        flash[:notice] = "そのデータは存在しません"
+        redirect_to("/posts/index")
+      else
+        render :index
+      end
+    end
+  end
+
 
 
 end

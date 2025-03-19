@@ -114,4 +114,40 @@ class UsersController < ApplicationController
       redirect_to("/posts/index")
     end
   end
+
+
+  # フォローするアクション
+  def follow
+    @user = User.find(params[:id])
+    unless current_user.following?(@user)
+      current_user.follow(@user)
+      flash[:notice] = "#{@user.name}をフォローしました"
+    end
+    redirect_to user_path(@user)
+  end
+
+  # フォロー解除するアクション
+  def unfollow
+    @user = User.find(params[:id])
+    if current_user.following?(@user)
+      current_user.unfollow(@user)
+      flash[:notice] = "#{@user.name}のフォローを解除しました"
+    end
+    redirect_to user_path(@user)
+  end
+
+  # フォロー一覧
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following
+    render 'show_follow'
+  end
+
+  # フォロワー一覧
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+    render 'show_follow'
+  end
+
 end

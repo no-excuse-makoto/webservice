@@ -24,6 +24,11 @@
       <div>
         <%= form.submit "検索" %>
       </div>
+      <!-- タグの検索フォームを追加 -->
+      <div>
+        <%= form.label :tag_name, "タグ検索" %>
+        <%= form.text_field :tag_name, placeholder: "例) 仕事、恋愛、勉強" %>
+      </div>
     <% end %>
   </div>
 
