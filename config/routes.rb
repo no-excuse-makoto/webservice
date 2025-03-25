@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "users/index" => "users#index"
 
-  # 1 generate controllerで追加されたルーティング
+  # 1 generate controllerで追加されたルーティングで/というURLでhomeコントローラーのtopアクションを呼び出す。homeコントローラーのtopアクションはhomeフォルダのtop.html.erbを表示する
   get "/" => "home#top"
   # aboutのURLを省略
   get "about" => "home#about"
