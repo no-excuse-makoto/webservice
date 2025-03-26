@@ -3,15 +3,14 @@ class CommentsController < ApplicationController
   
     def create
       @post = Post.find(params[:post_id])
-      @comment = @post.comments.build(comment_params)
-      @comment.user = current_user
+      @comment = @post.comments.build(content: params[:content], user_id: @current_user.id)
   
       if @comment.save
         flash[:notice] = "コメントを投稿しました"
-        redirect_to post_path(@post)
+        redirect_to "/posts/#{@post.id}"
       else
         flash[:alert] = "コメントの投稿に失敗しました"
-        redirect_to post_path(@post)
+        redirect_to "/posts/#{@post.id}"
       end
     end
   
@@ -23,7 +22,7 @@ class CommentsController < ApplicationController
       else
         flash[:alert] = "コメントを削除する権限がありません"
       end
-      redirect_to post_path(@comment.post)
+      redirect_to "/posts/#{@post.id}/destroy"
     end
   
     private
