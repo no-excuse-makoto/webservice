@@ -16,13 +16,13 @@ class CommentsController < ApplicationController
   
     def destroy
       @comment = Comment.find(params[:id])
-      if @comment.user == current_user
+      if @comment.user_id == @current_user.id
         @comment.destroy
         flash[:notice] = "コメントを削除しました"
       else
         flash[:alert] = "コメントを削除する権限がありません"
       end
-      redirect_to "/posts/#{@post.id}/destroy"
+      redirect_to "/posts/#{@comment.post_id}"
     end
   
     private

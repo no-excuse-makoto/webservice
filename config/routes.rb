@@ -87,7 +87,7 @@ Rails.application.routes.draw do
   post "posts/:post_id/comments/create" => "comments#create", as: "create_comment"
 
   # コメントを削除するルート
-  delete "posts/:post_id/comments/:id/destroy" => "comments#destroy", as: "destroy_comment"
+  delete "posts/:post_id/comments/:id" => "comments#destroy", as: "destroy_comment"
 
 
 

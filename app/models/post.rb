@@ -15,10 +15,10 @@ class Post < ApplicationRecord
 
     has_many :post_tags, dependent: :destroy
     has_many :tags, through: :post_tags
-
-    has_many :comments, dependent: :destroy
-    has_many :posts
+    
+    # この記述により、PostモデルはLikeモデルに属していることを示している。この記述により、Postモデルのインスタンスには、likesメソッドが使えるようになる。このメソッドを使うと、その投稿に紐づいているいいね情報を取得できる
     has_many :likes
+    has_many :comments, dependent: :destroy
     
 
 

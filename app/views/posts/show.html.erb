@@ -59,16 +59,21 @@
 
 
       <div class="post-comments">
-      <h3>コメント一覧</h3>
-      <% @post.comments.each do |comment| %>
-        <div class="comment">
-          <p><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
-          <% if comment.user_id == @current_user.id %>
-            <%= link_to "削除", destroy_comment_path(@post.id, comment.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
-          <% end %>
-        </div>
+  <h3>コメント一覧</h3>
+  <% @post.comments.each do |comment| %>
+    <div class="comment">
+      <p><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
+      <% if comment.user == current_user %>
+        <form action="<%= destroy_comment_path(@post.id, comment.id) %>" method="post" style="display:inline;">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？')">削除</button>
+        </form>
       <% end %>
-      </div>
+    </div>
+  <% end %>
+</div>
+
         <!-- コメント投稿フォーム -->
       <div class="new-comment">
         <%= form_with url: create_comment_path(@post.id), method: :post, local: true do |form| %>
