@@ -62,7 +62,11 @@
   <h3>コメント一覧</h3>
   <% @post.comments.each do |comment| %>
     <div class="comment">
-      <p><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
+    <p>
+    <strong>
+      <%= link_to comment.user.name, user_path(comment.user.id) %>
+    </strong>: <%= comment.content %>
+  </p>
       <% if comment.user == current_user %>
         <form action="<%= destroy_comment_path(@post.id, comment.id) %>" method="post" style="display:inline;">
           <input type="hidden" name="_method" value="delete">
