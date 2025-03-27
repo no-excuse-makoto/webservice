@@ -5,8 +5,10 @@
       <img src="<%= "/user_images/#{@user.image_name}" %>">
       <!-- 以下で、ユーザー名を出力している -->
       <h2><%= @user.name %></h2>
-      <!-- 以下で、メールアドレスを出力している -->
-      <p><%= @user.email %></p>
+      <!-- 以下で、ユーザー本人の場合は自分のメールアドレスを表示し、他のユーザーの場合はメールアドレスを表示しないようにしている -->
+      <% if @user.id == current_user.id %>
+        <p><%= @user.email %></p>
+      <% end %>
 
       <!-- フォロー/フォロー解除ボタン -->
       <% if current_user.following?(@user) %>
