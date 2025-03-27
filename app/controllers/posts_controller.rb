@@ -30,6 +30,7 @@ class PostsController < ApplicationController
 
     # コメントの情報を取得するためのインスタンス変数を定義している
     @comments = @post.comments.includes(:user) # コメントを取得
+    
   end
 
   # 新規の投稿をするためのアクション
@@ -179,9 +180,7 @@ class PostsController < ApplicationController
       end
     end
   end
-
-
-
+  
 end
 
 

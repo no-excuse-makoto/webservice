@@ -58,15 +58,51 @@
       <% end %>
 
 
-      <div class="post-comments">
+    <div class="post-comments">
   <h3>コメント一覧</h3>
-  <% @post.comments.each do |comment| %>
+  <% @post.comments.where(reply_to: nil).each do |comment| %>
     <div class="comment">
-    <p>
-    <strong>
-      <%= link_to comment.user.name, user_path(comment.user.id) %>
-    </strong>: <%= comment.content %>
-  </p>
+      <p>
+        <strong>
+          <%= link_to comment.user.name, user_path(comment.user.id) %>
+        </strong>: <%= comment.content %>
+      </p>
+
+      <!-- 返信コメントの表示 -->
+      <% comment.replies.each do |reply| %>
+        <div class="reply" style="margin-left:20px;">
+          <p>
+            <strong>
+              <%= link_to reply.user.name, user_path(reply.user.id) %>
+            </strong>: <%= reply.content %>
+          </p>
+          <% if reply.user == current_user %>
+            <form action="<%= destroy_comment_path(@post.id, reply.id) %>" method="post" style="display:inline;">
+              <input type="hidden" name="_method" value="delete">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？')">削除</button>
+            </form>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- 返信ボタン -->
+      <button class="btn btn-link" onclick="document.getElementById('reply-form-<%= comment.id %>').style.display = 'block';">返信</button>
+
+      <!-- 返信フォーム -->
+      <div id="reply-form-<%= comment.id %>" style="display:none; margin-left:20px;">
+        <%= form_with url: create_comment_path(@post.id), method: :post, local: true do |form| %>
+          <div class="form-group">
+            <%= form.hidden_field :reply_to, value: comment.id %>
+            <%= form.label :content, "返信内容" %>
+            <%= form.text_area :content, class: "form-control", placeholder: "@#{comment.user.name} " %>
+          </div>
+          <div class="form-group">
+            <%= form.submit "返信", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+
       <% if comment.user == current_user %>
         <form action="<%= destroy_comment_path(@post.id, comment.id) %>" method="post" style="display:inline;">
           <input type="hidden" name="_method" value="delete">
