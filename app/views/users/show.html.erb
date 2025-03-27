@@ -9,6 +9,9 @@
       <% if @user.id == current_user.id %>
         <p><%= @user.email %></p>
       <% end %>
+      <!-- 以下で、ユーザーの自己紹介文を出力している -->
+       <p><%= @user.introduction.presence || "自己紹介文はまだありません。" %></p>
+
 
       <!-- フォロー/フォロー解除ボタン -->
       <% if current_user.following?(@user) %>

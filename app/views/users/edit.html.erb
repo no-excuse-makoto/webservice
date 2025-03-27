@@ -21,6 +21,9 @@
         <p>メールアドレス</p>
         <!-- emailを初期値として表示している -->
         <input name="email" value="<%= @user.email %>">
+        <!-- 自己紹介文を編集するためのフォームを設置している -->
+        <p>自己紹介文</p>
+        <textarea name="introduction"><%= @user.introduction %></textarea>
         <input type="submit" value="保存">
         <% end %>
       </div>

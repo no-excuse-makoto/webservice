@@ -50,6 +50,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @user.name = params[:name]
     @user.email = params[:email]
+    @user.introduction = params[:introduction]
 
     # 画像が送信されている場合、public/user_imagesに保存する
     if params[:image]
