@@ -1,0 +1,27 @@
+<div class="main users-index">
+  <div class="container">
+    <h1>チャットルーム</h1>
+
+    <div class="chat-room">
+      <div id="messages" class="messages">
+        <% @messages.each do |message| %>
+          <div class="message <%= message.user == current_user ? 'sent' : 'received' %>">
+            <div class="message-header">
+              <img src="<%= message.user.image_url || '/default_user_icon.png' %>" alt="<%= message.user.name %>" class="user-icon">
+              <span class="user-name"><%= message.user.name %></span>
+            </div>
+            <p class="message-content"><%= message.content %></p>
+            <span class="message-time"><%= message.created_at.strftime("%H:%M") %></span>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="message-form">
+        <%= form_with model: [@chat_room, @message], url: chat_room_messages_path(@chat_room), method: :post, class: "form" do |form| %>
+          <%= form.text_area :content, rows: 1, placeholder: "メッセージを入力してください", class: "message-input" %>
+          <%= form.submit "送信", class: "send-button" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

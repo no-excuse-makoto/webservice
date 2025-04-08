@@ -89,6 +89,16 @@ Rails.application.routes.draw do
   # コメントを削除するルート
   delete "posts/:post_id/comments/:id" => "comments#destroy", as: "destroy_comment"
 
+  # チャット機能のルーティング
+  get "/chat_rooms", to: "chat_rooms#index", as: "chat_rooms"               # チャットルーム一覧
+  get "/chat_rooms/new/:user_id", to: "chat_rooms#new", as: "new_chat_room" # 新規チャットルーム作成フォーム
+  post "/chat_rooms", to: "chat_rooms#create", as: "create_chat_room"       # チャットルーム作成
+  get "/chat_rooms/:id", to: "chat_rooms#show", as: "chat_room"             # チャットルーム詳細
+
+  resources :chat_rooms, only: [:index, :new, :create, :show] do
+    resources :messages, only: [:create]
+  end
+
 
 
 

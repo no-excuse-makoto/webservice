@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# カテゴリーを追加
+Category.create(name: "仕事")
+Category.create(name: "趣味")
+Category.create(name: "勉強")
+Category.create(name: "健康")

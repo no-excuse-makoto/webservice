@@ -26,6 +26,14 @@
       <% end %>
     </div>
 
+    <h1><%= @user.name %>の詳細</h1>
+
+<% if @user != current_user %>
+  <%= link_to "チャットを開始する", new_chat_room_path(@user) %>
+<% end %>
+
+<%= link_to "チャットルーム一覧", chat_rooms_path %>
+
     <!-- フォロー/フォロワー一覧へのリンク -->
     <ul class="user-tabs">
       <li><%= link_to("フォロー", user_following_path(@user)) %></li>

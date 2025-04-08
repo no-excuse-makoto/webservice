@@ -1,0 +1,16 @@
+<div class="main users-index">
+    <div class="container">
+    <h1>チャットルーム一覧</h1>
+
+    <div class="chat-rooms">
+      <% @chat_rooms.each do |chat_room| %>
+        <% other_user = chat_room.user1 == current_user ? chat_room.user2 : chat_room.user1 %>
+        <div class="chat-room">
+          <p>
+            <%= link_to other_user.name, chat_room_path(chat_room) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+    </div>
+</div>

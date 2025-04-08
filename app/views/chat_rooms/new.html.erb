@@ -1,0 +1,5 @@
+<h1><%= @user.name %>さんとのチャットを開始</h1>
+<%= form_with url: create_chat_room_path, method: :post do |form| %>
+  <%= hidden_field_tag :user2_id, @user.id %>
+  <%= form.submit "チャットを開始する" %>
+<% end %>
