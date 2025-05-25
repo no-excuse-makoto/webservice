@@ -1,24 +1,106 @@
-# README
+# Bonds - 人と人をつなぐ相談マッチングサービス
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
 
-Things you may want to cover:
+**Bonds** は、悩みや不安を抱えるユーザー同士が気軽に相談し合える **相談マッチングプラットフォーム** です。  
+「似た経験をした人に相談したい」「身近に話せる人がいない」といったニーズに応え、  
+**孤立を防ぎ、自殺を予防するゲートキーパーアプリ**として設計しました。
 
-* Ruby version
+誰かのつらさに「共感」できるだけで、誰かの支えになれる。  
+そんな **“共感の力” を可視化し、人と人をマッチングする**ことを目的としています。
 
-* System dependencies
+---
 
-* Configuration
+## 使用技術
 
-* Database creation
+### 開発環境
 
-* Database initialization
+- **言語 / フレームワーク**: Ruby / Ruby on Rails 7
+- **フロントエンド**: ERBテンプレート（今後 Vue.js によるSPA化を予定）
+- **DB**: PostgreSQL
+- **認証**: Devise
+- **インフラ**: Docker / ECS (Fargate) / ECR / RDS / ALB / CloudWatch
+- **CI/CD**: GitHub Actions による自動デプロイ
+- **テスト**: RSpec（Model / System / Request）
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## 主な機能一覧
 
-* Deployment instructions
+### ✅ 実装済み機能
 
-* ...
+#### ユーザー認証と管理
+- ユーザー登録 / ログイン / ログアウト
+- プロフィール編集 / 退会
+
+#### ユーザー機能
+- ユーザー一覧・詳細表示
+
+#### 投稿機能
+- 通常投稿 / 編集  
+- カテゴリ別・タグ付き投稿 / 編集  
+- 匿名投稿（ユーザー情報非表示）  
+- 投稿一覧・詳細表示  
+- カテゴリ / タグ / キーワード検索  
+- タグリンクからの検索  
+- コメント投稿
+
+#### 共感と相談相手選択
+- 投稿への共感・共感取り消し  
+- 共感数の表示  
+- 共感ユーザー一覧の表示（UI調整中）  
+- 共感リストから相談相手を選択
+
+#### マッチング機能
+- 自動マッチング機能  
+- 条件フィルターによるマッチング精度向上
+
+#### 安全対策
+- 投稿・チャット・掲示板の NGワードフィルタリング
+
+#### 開発基盤
+- Docker によるローカル環境構築  
+- GitHub Actions によるCI  
+- AWS ECS を使った本番環境への自動デプロイ（ECR / RDS / ALB）
+
+---
+
+### 🔧 実装予定機能
+
+#### チャット機能（Action Cable 使用予定）
+- 1対1のリアルタイムチャット  
+- 初回メッセージテンプレート  
+- 通知機能（新着メッセージ / 共感）
+
+#### フォロー機能
+- UI改善・視認性の向上予定
+
+#### 悩み掲示板
+- 匿名性の高い書き込み  
+- 回答に対する評価  
+- 特定の回答者にのみ公開する限定投稿
+
+#### 評価と信頼指標
+- ユーザー信頼スコアの表示  
+- 相談後のフィードバック機能  
+- 高評価ユーザーへのバッジ付与
+
+#### 音声・ビデオ通話
+- 外部サービス連携による通話機能（音声・ビデオ）
+
+#### カレンダー連携
+- 相談スケジュールの調整  
+- 外部カレンダーとの同期
+
+#### 管理画面
+- ユーザー / 投稿 / カテゴリ / NGワードの管理
+
+---
+
+## セットアップ方法
+
+```bash
+git clone https://github.com/your-username/bonds.git
+cd bonds
+docker-compose up --build
+docker-compose exec web rails db:create db:migrate
