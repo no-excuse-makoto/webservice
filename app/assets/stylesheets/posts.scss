@@ -130,3 +130,82 @@
   gap: 10px;
   margin-top: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  /* 投稿一覧 */
+  .posts-index-item {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .post-left {
+    width: auto;
+    float: none;
+  }
+
+  .post-right {
+    width: 100%;
+    float: none;
+    padding-left: 0;
+  }
+
+  .post-left img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-user-name a {
+    font-size: 14px;
+  }
+
+  /* 投稿詳細 */
+  .posts-show-item {
+    padding: 20px;
+  }
+
+  .posts-show-item img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .posts-show-item .post-user-name a {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  .posts-show-item p {
+    font-size: 18px;
+  }
+
+  .post-menus {
+    float: none;
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  /* 新規投稿 */
+  .posts-new textarea {
+    font-size: 16px;
+    min-height: 120px;
+  }
+
+  .posts-new textarea::-webkit-input-placeholder {
+    font-size: 18px;
+  }
+
+  /* 検索フォーム */
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  /* like-users */
+  .like-users {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

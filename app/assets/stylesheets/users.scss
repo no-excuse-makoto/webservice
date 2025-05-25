@@ -114,3 +114,77 @@
   .users-form input {
     margin-bottom: 15px;
   }
+
+  @media screen and (max-width: 768px) {
+  /* ユーザー一覧 */
+  .users-heading {
+    font-size: 32px;
+    margin: 40px 0 20px;
+    text-align: center;
+  }
+
+  .users-index-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+
+  .user-left {
+    width: auto;
+    float: none;
+  }
+
+  .user-left img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-right {
+    width: 100%;
+    padding-left: 0;
+    float: none;
+    display: block;
+  }
+
+  .user-name a {
+    font-size: 14px;
+  }
+
+  /* ユーザー詳細 */
+  .user img {
+    width: 60px;
+    height: 60px;
+    margin: 15px 0 5px;
+  }
+
+  .user h2 {
+    font-size: 18px;
+  }
+
+  .user p {
+    font-size: 12px;
+  }
+
+  .user-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .user-tabs li {
+    float: none;
+    display: inline-block;
+  }
+
+  .user-tabs a {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* 入力フォーム */
+  .users-form input {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

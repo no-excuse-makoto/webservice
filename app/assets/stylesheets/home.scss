@@ -238,3 +238,109 @@
     border-radius: 0 0 2px 2px;
     font-size: 14px;
   }
+
+  /* ================================
+   レスポンシブ対応
+   ================================ */
+
+/* 画面幅が768px以下（スマホ）用のスタイル */
+@media screen and (max-width: 768px) {
+  .header-logo {
+    float: none;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+  }
+
+  .header-menus {
+    float: none;
+    padding: 0;
+    text-align: center;
+  }
+
+  .header-menus li {
+    float: none;
+    display: inline-block;
+    padding: 10px;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
+  .top-main {
+    padding: 120px 20px 60px;
+    background-position: center center;
+  }
+
+  .top-main h2 {
+    font-size: 36px;
+  }
+
+  .top-main p {
+    font-size: 16px;
+  }
+
+  .about-main {
+    padding: 100px 5% 0;
+  }
+
+  .about-main h2 {
+    font-size: 36px;
+  }
+
+  .about-main p {
+    font-size: 16px;
+  }
+
+  .about-img {
+    width: 100%;
+  }
+
+  .form-heading {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+
+  .form input[type="submit"] {
+    width: 100%;
+    float: none;
+    margin-top: 16px;
+  }
+
+  .flash {
+    font-size: 13px;
+    top: 64px;
+  }
+
+  .container {
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+}
+
+/* 画面幅が480px以下（より小さいスマホ）向けの追加調整 */
+@media screen and (max-width: 480px) {
+  .top-main h2 {
+    font-size: 28px;
+  }
+
+  .top-main p {
+    font-size: 14px;
+  }
+
+  .about-main h2 {
+    font-size: 28px;
+  }
+
+  .about-main p {
+    font-size: 14px;
+  }
+
+  .form input, .form textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .form-heading {
+    font-size: 28px;
+  }
+}
